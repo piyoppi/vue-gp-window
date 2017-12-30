@@ -186,6 +186,7 @@ export default {
             };
             document.addEventListener('mousemove', this.whileSizeChange, false);   
             document.addEventListener('mouseup', this.endSizeChange, false);   
+            this.$emit("startResize");
         },
         whileSizeChange: function(e) {
             this.width = this.stateAtSizeChangeStarted.width + e.pageX - this.stateAtSizeChangeStarted.cursorX
@@ -194,6 +195,7 @@ export default {
         endSizeChange: function(e) {
             document.removeEventListener('mousemove', this.whileSizeChange, false);   
             document.removeEventListener('mouseup', this.endSizeChange, false);   
+            this.$emit("endResize");
         },
 
         //
