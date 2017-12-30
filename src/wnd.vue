@@ -1,6 +1,6 @@
 <template>
     <transition v-on:enter="enter">
-        <div class="wnd_outer"
+        <div class="wnd-outer"
              v-show="_visible"
              v-bind:style="{
                 width: this._width,
@@ -10,16 +10,16 @@
                 zIndex: this.zIndex,
              }"
         >
-            <div class="bg_screen" v-if="dialogMode"></div>
-            <div class="caption" @mousedown.prevent="mousedown">
+            <div class="wnd-bg-screen" v-if="dialogMode"></div>
+            <div class="wnd-caption" @mousedown.prevent="mousedown">
                 {{ caption }}
-                <input class="close" type="button" @click="closeButtonClicked" value="x">
+                <input class="wnd-close" type="button" @click="closeButtonClicked" value="x">
             </div>
             <div class="wnd_inner" ref="wndInner" v-bind:class="{wnd_inner_withbtn: selectButtons.length > 0 }"></div>
             <div class="wnd_button_outer" ref="buttonOuter" v-if="selectButtons.length">
-                <button v-for="(item, index) in selectButtons" class="button_item" @click="buttonClicked(item)">{{ item.caption }}</button>
+                <button v-for="(item, index) in selectButtons" class="wnd-button-item" @click="buttonClicked(item)">{{ item.caption }}</button>
             </div>
-            <div class="mod_size" v-if="sizeChangeEnable" @mousedown="startSizeChange"></div>
+            <div class="wnd-mod-size" v-if="sizeChangeEnable" @mousedown="startSizeChange"></div>
         </div>
     </transition>
 </template>
@@ -211,18 +211,16 @@ export default {
 </script>
 
 <style scoped>
-.wnd_outer {
+.wnd-outer {
     position: fixed;
-    background-color: white;
     width: 100%;
     height: 100%;
-    border-radius: 3px;
     border: solid 1px black;
     border-radius: 5px 5px 0 0;
     background-color: #555;
     z-index: 1000;
 }
-.caption {
+.wnd-caption {
     width: 100%;
     height: 22px;
     background-color: #333;
@@ -233,7 +231,7 @@ export default {
     padding: 4px 0 4px 10px;
     position: relative;
 }
-.close {
+.wnd-close {
     background-color: transparent;
     color: white;
     border-style: solid;
@@ -244,7 +242,7 @@ export default {
     bottom: 3px;
     right: 0px;
 }
-.mod_size {
+.wnd-mod-size {
     position: absolute;
     bottom: 0px;
     right: 0px;
@@ -266,7 +264,7 @@ export default {
     height: 45px;
     text-align: center;
 }
-.button_item {
+.wnd-button-item {
     height: 30px;
     min-width: 90px;
     padding: 5px 15px;
@@ -284,12 +282,12 @@ export default {
     display: inline-block;
     vertical-align: top;
 }
-.button_item:active{
+.wnd-button-item:active{
     border-width: 1px;
     top: 2px;
     left: 2px;
 }
-.bg_screen {
+.wnd-bg-screen {
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
     height: 100%;
