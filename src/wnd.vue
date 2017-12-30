@@ -158,6 +158,7 @@ export default {
             this.cursorStartPos = {x: this.x, y: this.y};
             document.addEventListener("mousemove", this.mousemove)
             document.addEventListener("mouseup", this.mouseup)
+            this.$emit("startMove");
             if( this.$store ) this.$store.dispatch('moveWndToTop', {wndID: this.wndID});
         },
         mousemove: function(e) {
@@ -168,6 +169,7 @@ export default {
             this.cursorStartPos = null;
             document.removeEventListener("mousemove", this.mousemove)
             document.removeEventListener("mouseup", this.mouseup)
+            this.$emit("endMove");
         },
 
         //
