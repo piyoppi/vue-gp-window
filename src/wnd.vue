@@ -95,12 +95,18 @@ export default {
             return `${this.y}px`;
         },
         zIndex: function() {
-            return this.$store.state.wndStatuses[this.wndID].zIndex || 0;
+            if( this.$store ) {
+                return this.$store.state.wndStatuses[this.wndID].zIndex || 0;
+            } else {
+                return 0;
+            }
         }
     },
     created: function(){
-        this.wndID = this.$store.state.wndCount;
-        this.$store.dispatch('setWndStatuses', {wndID: this.$store.state.wndCount});
+        if( this.$store ) {
+            this.wndID = this.$store.state.wndCount;
+            this.$store.dispatch('setWndStatuses', {wndID: this.$store.state.wndCount});
+        }
     },
     mounted: function(){
         this.$emit('require-inner-item', el => {
@@ -152,7 +158,7 @@ export default {
             this.cursorStartPos = {x: this.x, y: this.y};
             document.addEventListener("mousemove", this.mousemove)
             document.addEventListener("mouseup", this.mouseup)
-            this.$store.dispatch('moveWndToTop', {wndID: this.wndID});
+            if( this.$store ) this.$store.dispatch('moveWndToTop', {wndID: this.wndID});
         },
         mousemove: function(e) {
             this.x = this.cursorStartPos.x + (e.pageX - this.cursorOffset.x);
