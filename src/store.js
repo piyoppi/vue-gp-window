@@ -1,7 +1,5 @@
-import Vuex from "vuex"
 import Vue from "vue"
-
-export default new Vuex.Store({
+export default {
     state: {
         wndStatuses: {},
         wndCount: 0,
@@ -35,4 +33,4 @@ export default new Vuex.Store({
             context.commit('moveWndToTop', payload);
         }
     }
-});
+};

@@ -35,8 +35,12 @@
 
 <script>
 
-import store from "./store.js"
+import storeWindow from "./store.js"
 import wndComponent from "./wnd.vue"
+import Vue from "vue"
+import Vuex from "vuex"
+
+let store = new Vuex.Store(storeWindow);
 
 export default {
     components: {
