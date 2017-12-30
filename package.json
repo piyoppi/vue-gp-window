@@ -1,8 +1,8 @@
 {
-  "name": "vue_window_sample",
-  "version": "1.0.0",
+  "name": "vue-gp-window",
+  "version": "0.1.0",
   "description": "",
-  "main": "",
+  "main": "src/wnd.vue",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
