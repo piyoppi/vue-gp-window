@@ -149,6 +149,14 @@ export default {
         },
 
         //
+        //  Windows Z-Index
+        //
+
+        moveWindowToTop: function() {
+            if( this.$store ) this.$store.dispatch('moveWndToTop', {wndID: this.wndID});
+        },
+
+        //
         //  Change position
         //
 
@@ -159,7 +167,7 @@ export default {
             document.addEventListener("mousemove", this.mousemove)
             document.addEventListener("mouseup", this.mouseup)
             this.$emit("start-move");
-            if( this.$store ) this.$store.dispatch('moveWndToTop', {wndID: this.wndID});
+            this.moveWindowToTop();
         },
         mousemove: function(e) {
             this.x = this.cursorStartPos.x + (e.pageX - this.cursorOffset.x);
