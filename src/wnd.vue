@@ -158,7 +158,7 @@ export default {
             this.cursorStartPos = {x: this.x, y: this.y};
             document.addEventListener("mousemove", this.mousemove)
             document.addEventListener("mouseup", this.mouseup)
-            this.$emit("startMove");
+            this.$emit("start-move");
             if( this.$store ) this.$store.dispatch('moveWndToTop', {wndID: this.wndID});
         },
         mousemove: function(e) {
@@ -169,7 +169,7 @@ export default {
             this.cursorStartPos = null;
             document.removeEventListener("mousemove", this.mousemove)
             document.removeEventListener("mouseup", this.mouseup)
-            this.$emit("endMove");
+            this.$emit("end-move");
         },
 
         //
@@ -186,7 +186,7 @@ export default {
             };
             document.addEventListener('mousemove', this.whileSizeChange, false);   
             document.addEventListener('mouseup', this.endSizeChange, false);   
-            this.$emit("startResize");
+            this.$emit("start-resize");
         },
         whileSizeChange: function(e) {
             this.width = this.stateAtSizeChangeStarted.width + e.pageX - this.stateAtSizeChangeStarted.cursorX
@@ -195,7 +195,7 @@ export default {
         endSizeChange: function(e) {
             document.removeEventListener('mousemove', this.whileSizeChange, false);   
             document.removeEventListener('mouseup', this.endSizeChange, false);   
-            this.$emit("endResize");
+            this.$emit("end-resize");
         },
 
         //
