@@ -133,6 +133,11 @@ export default {
             if( this.selectButtons.length ) {
                 buttonItemRect = this.$refs.buttonOuter.getBoundingClientRect();
             }
+
+            //最前面にする
+            this.moveWindowToTop();
+
+            //大きさを設定する
             let innerItemRect = this.$refs.wndInner.getBoundingClientRect();
             this.width = this.initialWidth || innerItemRect.width;
             this.height = (this.initialHeight || innerItemRect.height) + 22 + ((this.selectButtons.length && buttonItemRect) ? buttonItemRect.height : 0);

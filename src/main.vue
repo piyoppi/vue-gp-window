@@ -1,8 +1,20 @@
 <template>
     <div class="wnd-area">
+        <button @click="showWindow0">ウインドウを表示</button>
+
+        <!-- Window 0 -->
+        <wnd-component caption="Window0"
+                       :visible.sync="isVisibleWindow0"
+                       @require-inner-item="window0RequireInnerItem"
+                       ></wnd-component>
+        <div ref="window0Inner" class="window-zero-inner">
+            後から表示したウインドウは<br>
+            最前面に表示します
+        </div>
+
         <!-- Window 1 -->
         <wnd-component caption="Window1"
-                       :visible.sync="isVisibleWindow"
+                       :visible.sync="isVisibleWindow1"
                        @require-inner-item="window1RequireInnerItem"
                        ></wnd-component>
         <div ref="window1Inner" class="window-first-inner">
@@ -48,13 +60,18 @@ export default {
     },
     data: function () {
         return {
-            isVisibleWindow: true,                              //Window1 visible
+            isVisibleWindow0: false,                            //Window0 visible
+            isVisibleWindow1: true,                             //Window1 visible
             isVisibleWindow2: true,                             //Window2 visible
             isVisibleWindow3: true,                             //Window3 visible
         }
     },
     store,
     methods: {
+        window0RequireInnerItem: function(callback){
+            //ウインドウ1に内包すべき要素を設定
+            callback(this.$refs.window0Inner);
+        },
         window1RequireInnerItem: function(callback){
             //ウインドウ1に内包すべき要素を設定
             callback(this.$refs.window1Inner);
@@ -70,6 +87,9 @@ export default {
         buttonClicked: function(item) {
             //押されたボタンを表示する
             alert(`押されたボタンは「${item.caption}」`);
+        },
+        showWindow0: function() {
+            this.isVisibleWindow0 = true;
         }
     },
 }
@@ -82,6 +102,11 @@ export default {
     height: 100%;
     position: absolute;
     user-select: none;
+}
+.window-zero-inner {
+    width: 300px;
+    height: 200px;
+    color: white;
 }
 .window-first-inner {
     width: 200px;
