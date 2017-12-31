@@ -11,7 +11,7 @@ export default {
             if( !state.wndStatuses[payload.wndID] ) {
                 Vue.set(state.wndStatuses, payload.wndID, {
                     zIndex: state.wndCount,
-                    tag: state.tag || null
+                    tag: payload.tag || null
                 });
                 state.maxWndZIndex = state.wndCount;
                 state.wndCount = state.wndCount+1;
