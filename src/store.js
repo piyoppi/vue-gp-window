@@ -4,20 +4,24 @@ export default {
         wndStatuses: {},
         wndCount: 0,
         maxWndZIndex: 0,
+        topWndID: -1,
     },
     mutations: {
         setWndStatuses: (state, payload) => {
             if( !state.wndStatuses[payload.wndID] ) {
                 Vue.set(state.wndStatuses, payload.wndID, {
                     zIndex: state.wndCount,
+                    tag: state.tag || null
                 });
                 state.maxWndZIndex = state.wndCount;
                 state.wndCount = state.wndCount+1;
+                state.topWndID = payload.wndID;
             }
         },
         moveWndToTop: (state, payload) => {
             let oldZIndex = state.wndStatuses[payload.wndID].zIndex;
             state.wndStatuses[payload.wndID].zIndex = state.maxWndZIndex;
+            state.topWndID = payload.wndID;
             for(let key in state.wndStatuses){
                 if( (state.wndStatuses[key].zIndex > oldZIndex) && (key != payload.wndID) ) {
                     state.wndStatuses[key].zIndex -= 1;

@@ -82,7 +82,7 @@ export default {
             if( this.visible ){
                 this.$emit('opened');
             } else {
-                this.$emit('closed');
+                this.$emit("closed", this.wndID, this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
             }
             return this.visible;
         },
@@ -146,7 +146,7 @@ export default {
             this.width = this.initialWidth || innerItemRect.width;
             this.height = (this.initialHeight || innerItemRect.height) + 22 + ((this.selectButtons.length && buttonItemRect) ? buttonItemRect.height : 0);
 
-            this.$emit("show", this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
+            this.$emit("show", this.wndID, this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
 
             //初期化が済んでいれば処理を終了
             if( (this.x !== null) && (this.y !== null) ) return;
@@ -177,7 +177,7 @@ export default {
             this.cursorStartPos = {x: this.x, y: this.y};
             document.addEventListener("mousemove", this.mousemove)
             document.addEventListener("mouseup", this.mouseup)
-            this.$emit("start-move", this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
+            this.$emit("start-move", this.wndID, this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
             this.moveWindowToTop();
         },
         mousemove: function(e) {
@@ -188,7 +188,7 @@ export default {
             this.cursorStartPos = null;
             document.removeEventListener("mousemove", this.mousemove)
             document.removeEventListener("mouseup", this.mouseup)
-            this.$emit("end-move", this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
+            this.$emit("end-move", this.wndID, this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
         },
 
         //
@@ -225,7 +225,6 @@ export default {
             this.$emit('button-clicked', item);
         },
         closeButtonClicked: function() {
-            this.$emit('closed');
             this.$emit('update:visible', false)
         },
     },
