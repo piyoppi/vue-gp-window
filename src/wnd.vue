@@ -72,6 +72,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        tag: {
+            type: Object,
+            default: null
+        }
     },
     computed: {
         _visible: function(){
@@ -105,7 +109,7 @@ export default {
     created: function(){
         if( this.$store ) {
             this.wndID = this.$store.state.wndCount;
-            this.$store.dispatch('setWndStatuses', {wndID: this.$store.state.wndCount});
+            this.$store.dispatch('setWndStatuses', {wndID: this.$store.state.wndCount, tag: this.tag});
         }
     },
     mounted: function(){
@@ -142,6 +146,8 @@ export default {
             this.width = this.initialWidth || innerItemRect.width;
             this.height = (this.initialHeight || innerItemRect.height) + 22 + ((this.selectButtons.length && buttonItemRect) ? buttonItemRect.height : 0);
 
+            this.$emit("show", this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
+
             //初期化が済んでいれば処理を終了
             if( (this.x !== null) && (this.y !== null) ) return;
             if( this.initialPosition && this.initialPosition.length === 2 ){
@@ -171,7 +177,7 @@ export default {
             this.cursorStartPos = {x: this.x, y: this.y};
             document.addEventListener("mousemove", this.mousemove)
             document.addEventListener("mouseup", this.mouseup)
-            this.$emit("start-move");
+            this.$emit("start-move", this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
             this.moveWindowToTop();
         },
         mousemove: function(e) {
@@ -182,7 +188,7 @@ export default {
             this.cursorStartPos = null;
             document.removeEventListener("mousemove", this.mousemove)
             document.removeEventListener("mouseup", this.mouseup)
-            this.$emit("end-move");
+            this.$emit("end-move", this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
         },
 
         //
