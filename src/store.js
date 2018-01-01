@@ -13,7 +13,7 @@ export default {
                 Vue.set(state.wndStatuses, payload.wndID, {
                     zIndex: state.wndCount,
                     tag: payload.tag || null,
-                    visible: false,
+                    visible: payload.visible || false,
                 });
                 state.maxWndZIndex = state.wndCount;
                 state.wndCount = state.wndCount+1;

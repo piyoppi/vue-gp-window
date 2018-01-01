@@ -1,6 +1,7 @@
 module.exports = {
     entry: {
         main: './src/main.js',
+        stateTest: './src/stateTest.js',
     },
     output: {filename: './dist/js/[name].bundle.js'},
     module: {

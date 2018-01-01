@@ -29,7 +29,7 @@
 export default {
     data: function () {
         return {
-            wndID: 0,
+            _wndID: 0,
             x: null,
             y: null,
             cursorOffset: {x: 0, y: 0},
@@ -43,6 +43,14 @@ export default {
         visible: {
             type: Boolean,
             default: true
+        },
+        wndID: {
+            type: Number,
+            default: -1 
+        },
+        isVisibleControlState: {
+            type: Boolean,
+            default: false 
         },
         caption: {
             type: String,
@@ -79,13 +87,23 @@ export default {
     },
     computed: {
         _visible: function(){
-            if( this.visible ){
-                this.$emit('opened');
+            if( this.$store && this.isVisibleControlState ){
+                if( this.$store.state.wndStatuses[this._wndID].visible ) {
+                    this.$emit('opened');
+                } else {
+                    this.$emit("closed", this._wndID, this.$store ? this.$store.state.wndStatuses[this._wndID] : null);
+                }
+                console.log("xxx");
+                return this.$store.state.wndStatuses[this._wndID].visible;
             } else {
-                this.$emit("closed", this.wndID, this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
+                if( this.visible ){
+                    this.$emit('opened');
+                } else {
+                    this.$emit("closed", this._wndID, this.$store ? this.$store.state.wndStatuses[this._wndID] : null);
+                }
+                this.$store.dispatch('setWndStatuses', {wndID: this._wndID, visible: this.visible});
+                return this.visible;
             }
-            this.$store.dispatch('setWndStatuses', {wndID: this.wndID, visible: this.visible});
-            return this.visible;
         },
         _width: function() {
             return this.width ? `${this.width}px` : 'auto';
@@ -101,7 +119,7 @@ export default {
         },
         zIndex: function() {
             if( this.$store ) {
-                return this.$store.state.wndStatuses[this.wndID].zIndex || 0;
+                return this.$store.state.wndStatuses[this._wndID].zIndex || 0;
             } else {
                 return 0;
             }
@@ -109,15 +127,15 @@ export default {
     },
     created: function(){
         if( this.$store ) {
-            this.wndID = this.$store.state.wndCount;
-            this.$store.dispatch('setWndStatuses', {wndID: this.$store.state.wndCount, tag: this.tag});
+            this._wndID = this.wndID < 0 ? this.$store.state.wndCount : this.wndID;
+            this.$store.dispatch('setWndStatuses', {wndID: this._wndID, tag: this.tag, visible: this.visible});
         }
     },
     mounted: function(){
         this.$emit('require-inner-item', el => {
             this.$refs.wndInner.appendChild(el);
             //（v-show=falseの時は要素の高さが取れないので初期化しない）
-            if( this.visible && this.$el ){
+            if( this._visible && this.$el ){
                 this.setInitialState();
             }
         });
@@ -147,7 +165,7 @@ export default {
             this.width = this.initialWidth || innerItemRect.width;
             this.height = (this.initialHeight || innerItemRect.height) + 22 + ((this.selectButtons.length && buttonItemRect) ? buttonItemRect.height : 0);
 
-            this.$emit("show", this.wndID, this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
+            this.$emit("show", this._wndID, this.$store ? this.$store.state.wndStatuses[this._wndID] : null);
 
             //初期化が済んでいれば処理を終了
             if( (this.x !== null) && (this.y !== null) ) return;
@@ -165,7 +183,7 @@ export default {
         //
 
         moveWindowToTop: function() {
-            if( this.$store ) this.$store.dispatch('moveWndToTop', {wndID: this.wndID});
+            if( this.$store ) this.$store.dispatch('moveWndToTop', {wndID: this._wndID});
         },
 
         //
@@ -178,7 +196,7 @@ export default {
             this.cursorStartPos = {x: this.x, y: this.y};
             document.addEventListener("mousemove", this.mousemove)
             document.addEventListener("mouseup", this.mouseup)
-            this.$emit("start-move", this.wndID, this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
+            this.$emit("start-move", this._wndID, this.$store ? this.$store.state.wndStatuses[this._wndID] : null);
             this.moveWindowToTop();
         },
         mousemove: function(e) {
@@ -189,7 +207,7 @@ export default {
             this.cursorStartPos = null;
             document.removeEventListener("mousemove", this.mousemove)
             document.removeEventListener("mouseup", this.mouseup)
-            this.$emit("end-move", this.wndID, this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
+            this.$emit("end-move", this._wndID, this.$store ? this.$store.state.wndStatuses[this._wndID] : null);
         },
 
         //
@@ -226,7 +244,12 @@ export default {
             this.$emit('button-clicked', item);
         },
         closeButtonClicked: function() {
-            this.$emit('update:visible', false)
+            if( this.$store && this.isVisibleControlState ){
+                console.log("fugafuga");
+                this.$store.dispatch('setWndStatuses', {wndID: this._wndID, visible: false});
+            } else {
+                this.$emit('update:visible', false)
+            }
         },
     },
 }
