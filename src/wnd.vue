@@ -84,6 +84,7 @@ export default {
             } else {
                 this.$emit("closed", this.wndID, this.$store ? this.$store.state.wndStatuses[this.wndID] : null);
             }
+            this.$store.dispatch('setWndStatuses', {wndID: this.wndID, visible: this.visible});
             return this.visible;
         },
         _width: function() {

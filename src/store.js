@@ -1,4 +1,5 @@
 import Vue from "vue"
+
 export default {
     state: {
         wndStatuses: {},
@@ -11,11 +12,16 @@ export default {
             if( !state.wndStatuses[payload.wndID] ) {
                 Vue.set(state.wndStatuses, payload.wndID, {
                     zIndex: state.wndCount,
-                    tag: payload.tag || null
+                    tag: payload.tag || null,
+                    visible: false,
                 });
                 state.maxWndZIndex = state.wndCount;
                 state.wndCount = state.wndCount+1;
                 state.topWndID = payload.wndID;
+            } else {
+                if(payload.zIndex) state.wndStatuses[payload.wndID].zIndex = payload.zIndex;
+                if(payload.tag) state.wndStatuses[payload.wndID].tag = payload.tag;
+                if(typeof payload.visible !== "undefined") state.wndStatuses[payload.wndID].visible = payload.visible;
             }
         },
         moveWndToTop: (state, payload) => {
@@ -27,7 +33,7 @@ export default {
                     state.wndStatuses[key].zIndex -= 1;
                 }
             }
-        },
+        }
     },
     actions: {
         setWndStatuses(context, payload) {
