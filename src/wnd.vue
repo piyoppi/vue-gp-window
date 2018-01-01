@@ -93,7 +93,6 @@ export default {
                 } else {
                     this.$emit("closed", this._wndID, this.$store ? this.$store.state.wndStatuses[this._wndID] : null);
                 }
-                console.log("xxx");
                 return this.$store.state.wndStatuses[this._wndID].visible;
             } else {
                 if( this.visible ){
@@ -245,7 +244,6 @@ export default {
         },
         closeButtonClicked: function() {
             if( this.$store && this.isVisibleControlState ){
-                console.log("fugafuga");
                 this.$store.dispatch('setWndStatuses', {wndID: this._wndID, visible: false});
             } else {
                 this.$emit('update:visible', false)
