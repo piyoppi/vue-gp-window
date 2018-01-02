@@ -6,6 +6,7 @@
         <wnd-component caption="Window0"
                        :visible.sync="isVisibleWindow0"
                        @require-inner-item="window0RequireInnerItem"
+                       @closed="wndClosed"
                        ></wnd-component>
         <div ref="window0Inner" class="window-zero-inner">
             後から表示したウインドウは<br>
@@ -16,6 +17,7 @@
         <wnd-component caption="Window1"
                        :visible.sync="isVisibleWindow1"
                        @require-inner-item="window1RequireInnerItem"
+                       @closed="wndClosed"
                        ></wnd-component>
         <div ref="window1Inner" class="window-first-inner">
             Hello world!!
@@ -26,6 +28,7 @@
                        :visible.sync="isVisibleWindow2"
                        :initial-position="[160, 160]"
                        @require-inner-item="window2RequireInnerItem"
+                       @closed="wndClosed"
                        ></wnd-component>
         <div ref="window2Inner" class="window-second-inner">
             <img src="img/hakoneko.png" alt="neko">
@@ -36,6 +39,7 @@
                        :visible.sync="isVisibleWindow3"
                        @require-inner-item="window3RequireInnerItem"
                        @button-clicked="buttonClicked"
+                       @closed="wndClosed"
                        :initial-position="[30, 30]"
                        :select-buttons="[{caption: 'はい'}, {caption: 'いいえ'}]"
                        ></wnd-component>
@@ -90,6 +94,9 @@ export default {
         },
         showWindow0: function() {
             this.isVisibleWindow0 = true;
+        },
+        wndClosed: function(wndID, wndStatus) {
+            console.log(`Closed ${wndID}`);
         }
     },
 }

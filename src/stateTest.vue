@@ -7,6 +7,7 @@
         <wnd-component caption="Window0"
                        :visible.sync="isVisibleWindow0"
                        @require-inner-item="window0RequireInnerItem"
+                       @closed="wndClosed"
                        :isVisibleControlState.boolean="true"
                        :wndID.number="0"
                        ></wnd-component>
@@ -19,6 +20,7 @@
         <wnd-component caption="Window1"
                        :visible.sync="isVisibleWindow1"
                        @require-inner-item="window1RequireInnerItem"
+                       @closed="wndClosed"
                        :isVisibleControlState.boolean="true"
                        :wndID.number="1"
                        ></wnd-component>
@@ -31,6 +33,7 @@
                        :visible.sync="isVisibleWindow2"
                        :initial-position="[160, 160]"
                        @require-inner-item="window2RequireInnerItem"
+                       @closed="wndClosed"
                        :isVisibleControlState.boolean="true"
                        :wndID.number="2"
                        ></wnd-component>
@@ -43,6 +46,7 @@
                        :visible.sync="isVisibleWindow3"
                        @require-inner-item="window3RequireInnerItem"
                        @button-clicked="buttonClicked"
+                       @closed="wndClosed"
                        :initial-position="[30, 30]"
                        :select-buttons="[{caption: 'はい'}, {caption: 'いいえ'}]"
                        :isVisibleControlState.boolean="true"
@@ -102,6 +106,9 @@ export default {
         },
         switchWindow1: function() {
             this.$store.dispatch('setWndStatuses', {wndID: 1, visible: true});
+        },
+        wndClosed: function(wndID, wndStatus) {
+            console.log(`Closed ${wndID}`);
         }
     },
 }
