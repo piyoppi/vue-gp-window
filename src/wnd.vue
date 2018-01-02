@@ -90,18 +90,18 @@ export default {
             if( this.$store && this.isVisibleControlState ){
                 const state = this.$store.state.wndStatuses[this._wndID];
                 if( state.visible && !state._isPublishedOpenEvent ) {
-                    this.$emit('opened');
+                    this.$emit("opened", this._wndID, this.tag);
                     this.$store.dispatch('publshedOpenEvent', {wndID: this._wndID});
                 } else if( !state._isPublishedCloseEvent )  {
-                    this.$emit("closed", this._wndID, this.$store ? this.$store.state.wndStatuses[this._wndID] : null);
+                    this.$emit("closed", this._wndID, this.tag);
                     this.$store.dispatch('publshedCloseEvent', {wndID: this._wndID});
                 }
                 return this.$store.getters.getWndVisibleByID(this._wndID);
             } else {
                 if( this.visible ){
-                    this.$emit('opened');
+                    this.$emit("opened", this._wndID, this.tag);
                 } else {
-                    this.$emit("closed", this._wndID, this.$store ? this.$store.state.wndStatuses[this._wndID] : null);
+                    this.$emit("closed", this._wndID, this.tag);
                 }
                 this.$store.dispatch('setWndStatuses', {wndID: this._wndID, visible: this.visible});
                 return this.visible;
