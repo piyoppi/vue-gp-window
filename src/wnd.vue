@@ -52,6 +52,10 @@ export default {
             type: Boolean,
             default: false 
         },
+        isCloseButtonDisable: {
+            type: Boolean,
+            default: false 
+        },
         caption: {
             type: String,
             default: "" 
@@ -246,10 +250,14 @@ export default {
             this.$emit('button-clicked', item);
         },
         closeButtonClicked: function() {
-            if( this.$store && this.isVisibleControlState ){
-                this.$store.dispatch('setWndStatuses', {wndID: this._wndID, visible: false});
+            if( this.isCloseButtonDisable ) {
+                this.$emit('closeButtonClicked');
             } else {
-                this.$emit('update:visible', false)
+                if( this.$store && this.isVisibleControlState ){
+                    this.$store.dispatch('setWndStatuses', {wndID: this._wndID, visible: false});
+                } else {
+                    this.$emit('update:visible', false)
+                }
             }
         },
     },

@@ -8,6 +8,7 @@
                        :visible.sync="isVisibleWindow0"
                        @require-inner-item="window0RequireInnerItem"
                        @closed="wndClosed"
+                       @opened="wndOpened"
                        :isVisibleControlState.boolean="true"
                        :wndID.number="0"
                        ></wnd-component>
@@ -21,6 +22,7 @@
                        :visible.sync="isVisibleWindow1"
                        @require-inner-item="window1RequireInnerItem"
                        @closed="wndClosed"
+                       @opened="wndOpened"
                        :isVisibleControlState.boolean="true"
                        :wndID.number="1"
                        ></wnd-component>
@@ -34,6 +36,7 @@
                        :initial-position="[160, 160]"
                        @require-inner-item="window2RequireInnerItem"
                        @closed="wndClosed"
+                       @opened="wndOpened"
                        :isVisibleControlState.boolean="true"
                        :wndID.number="2"
                        ></wnd-component>
@@ -47,6 +50,7 @@
                        @require-inner-item="window3RequireInnerItem"
                        @button-clicked="buttonClicked"
                        @closed="wndClosed"
+                       @opened="wndOpened"
                        :initial-position="[30, 30]"
                        :select-buttons="[{caption: 'はい'}, {caption: 'いいえ'}]"
                        :isVisibleControlState.boolean="true"
@@ -79,6 +83,12 @@ export default {
             isVisibleWindow3: true,                             //Window3 visible
         }
     },
+    created: function() {
+        console.log("created");
+    },
+    mounted: function() {
+        console.log("mounted");
+    },
     store,
     methods: {
         window0RequireInnerItem: function(callback){
@@ -109,6 +119,9 @@ export default {
         },
         wndClosed: function(wndID, wndStatus) {
             console.log(`Closed ${wndID}`);
+        },
+        wndOpened: function(wndID, wndStatus) {
+            console.log(`Opened ${wndID}`);
         }
     },
 }
