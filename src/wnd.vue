@@ -251,7 +251,7 @@ export default {
         },
         closeButtonClicked: function() {
             if( this.isCloseButtonDisable ) {
-                this.$emit('closeButtonClicked', this._wndID);
+                this.$emit('close-button-clicked', this._wndID);
             } else {
                 if( this.$store && this.isVisibleControlState ){
                     this.$store.dispatch('setWndStatuses', {wndID: this._wndID, visible: false});
