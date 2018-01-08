@@ -92,7 +92,7 @@ export default {
     computed: {
         _visible: function(){
             if( this.$store && this.isVisibleControlState ){
-                const state = this.$store.state.wndStatuses[this._wndID];
+                const state = this.$store.state.gpWindowStates.wndStatuses[this._wndID];
                 if( state.visible && !state._isPublishedOpenEvent ) {
                     this.$emit("opened", this._wndID, this.tag);
                     this.$store.dispatch('publshedOpenEvent', {wndID: this._wndID});
@@ -125,7 +125,7 @@ export default {
         },
         zIndex: function() {
             if( this.$store ) {
-                return this.$store.state.wndStatuses[this._wndID].zIndex || 0;
+                return this.$store.state.gpWindowStates.wndStatuses[this._wndID].zIndex || 0;
             } else {
                 return 0;
             }
@@ -133,7 +133,7 @@ export default {
     },
     created: function(){
         if( this.$store ) {
-            this._wndID = this.wndID < 0 ? this.$store.state.wndCount : this.wndID;
+            this._wndID = this.wndID < 0 ? this.$store.state.gpWindowStates.wndCount : this.wndID;
             this.$store.dispatch('setWndStatuses', {wndID: this._wndID, tag: this.tag, visible: this.visible});
         }
     },
@@ -171,7 +171,7 @@ export default {
             this.width = this.initialWidth || innerItemRect.width;
             this.height = (this.initialHeight || innerItemRect.height) + 22 + ((this.selectButtons.length && buttonItemRect) ? buttonItemRect.height : 0);
 
-            this.$emit("show", this._wndID, this.$store ? this.$store.state.wndStatuses[this._wndID] : null);
+            this.$emit("show", this._wndID, this.$store ? this.$store.state.gpWindowStates.wndStatuses[this._wndID] : null);
 
             //初期化が済んでいれば処理を終了
             if( (this.x !== null) && (this.y !== null) ) return;
@@ -202,7 +202,7 @@ export default {
             this.cursorStartPos = {x: this.x, y: this.y};
             document.addEventListener("mousemove", this.mousemove)
             document.addEventListener("mouseup", this.mouseup)
-            this.$emit("start-move", this._wndID, this.$store ? this.$store.state.wndStatuses[this._wndID] : null);
+            this.$emit("start-move", this._wndID, this.$store ? this.$store.state.gpWindowStates.wndStatuses[this._wndID] : null);
             this.moveWindowToTop();
         },
         mousemove: function(e) {
@@ -213,7 +213,7 @@ export default {
             this.cursorStartPos = null;
             document.removeEventListener("mousemove", this.mousemove)
             document.removeEventListener("mouseup", this.mouseup)
-            this.$emit("end-move", this._wndID, this.$store ? this.$store.state.wndStatuses[this._wndID] : null);
+            this.$emit("end-move", this._wndID, this.$store ? this.$store.state.gpWindowStates.wndStatuses[this._wndID] : null);
         },
 
         //
