@@ -51,12 +51,15 @@
 
 <script>
 
-import storeWindow from "./store.js"
+import gpWindowStore from "./store.js"
 import wndComponent from "./wnd.vue"
 import Vue from "vue"
 import Vuex from "vuex"
-
-let store = new Vuex.Store(storeWindow);
+let store = new Vuex.Store({
+    modules: {
+        gpWindowStore
+    }
+});
 
 export default {
     components: {
