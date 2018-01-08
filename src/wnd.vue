@@ -11,7 +11,7 @@
              }"
         >
             <div class="wnd-bg-screen" v-if="dialogMode"></div>
-            <div class="wnd-caption" @mousedown.prevent="mousedown">
+            <div class="wnd-caption" ref="captionBar" @mousedown.prevent="mousedown">
                 {{ caption }}
                 <input class="wnd-close" type="button" @click="closeButtonClicked" value="x">
             </div>
@@ -168,8 +168,9 @@ export default {
 
             //大きさを設定する
             let innerItemRect = this.$refs.wndInner.getBoundingClientRect();
+            let captionBarRect = this.$refs.captionBar.getBoundingClientRect();
             this.width = this.initialWidth || innerItemRect.width;
-            this.height = (this.initialHeight || innerItemRect.height) + 22 + ((this.selectButtons.length && buttonItemRect) ? buttonItemRect.height : 0);
+            this.height = (this.initialHeight || innerItemRect.height) + captionBarRect.height + ((this.selectButtons.length && buttonItemRect) ? buttonItemRect.height : 0);
 
             this.$emit("show", this._wndID, this.$store ? this.$store.state.gpWindowStore.wndStatuses[this._wndID] : null);
 
