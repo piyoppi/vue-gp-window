@@ -1,4 +1,5 @@
 # vue-gp-window
+vue general-purpose window system
 
 ## 使い方
 ```

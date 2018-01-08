@@ -250,15 +250,14 @@ export default {
             this.$emit('button-clicked', item);
         },
         closeButtonClicked: function() {
-            if( this.isCloseButtonDisable ) {
-                this.$emit('close-button-clicked', this._wndID);
-            } else {
+            if( !this.isCloseButtonDisable ) {
                 if( this.$store && this.isVisibleControlState ){
                     this.$store.dispatch('setWndStatuses', {wndID: this._wndID, visible: false});
                 } else {
                     this.$emit('update:visible', false)
                 }
             }
+            this.$emit('close-button-clicked', this._wndID);
         },
     },
 }
