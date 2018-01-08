@@ -15,7 +15,7 @@
                 {{ caption }}
                 <input class="wnd-close" type="button" @click="closeButtonClicked" value="x">
             </div>
-            <div class="wnd-inner" ref="wndInner" v-bind:class="{wnd-inner-withbtn: selectButtons.length > 0 }"></div>
+            <div class="wnd-inner" ref="wndInner" v-bind:class="{'wnd-inner-withbtn': selectButtons.length > 0 }"></div>
             <div class="wnd_button_outer" ref="buttonOuter" v-if="selectButtons.length">
                 <button v-for="(item, index) in selectButtons" class="wnd-button-item" @click="buttonClicked(item)">{{ item.caption }}</button>
             </div>
