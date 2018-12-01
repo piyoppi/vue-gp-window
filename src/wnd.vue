@@ -103,11 +103,9 @@ export default {
                 return this.$store.getters.getWndVisibleByID(this._wndID);
             } else {
                 if( this.visible ){
-                    if( !this.$store.state.gpWindowStore.wndStatuses[this._wndID] ||
-                        !this.$store.state.gpWindowStore.wndStatuses[this._wndID].visible ) this.$emit("opened", this._wndID, this.tag);
+                    if( !this.$store.state.wndStatuses[this._wndID].visible ) this.$emit("opened", this._wndID, this.tag);
                 } else {
-                    if( !this.$store.state.gpWindowStore.wndStatuses[this._wndID] ||
-                        this.$store.state.gpWindowStore.wndStatuses[this._wndID].visible ) this.$emit("closed", this._wndID, this.tag);
+                    if( this.$store.state.wndStatuses[this._wndID].visible ) this.$emit("closed", this._wndID, this.tag);
                 }
                 this.$store.dispatch('setWndStatuses', {wndID: this._wndID, visible: this.visible});
                 return this.visible;
